@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import imagePng from "images/hero-right-3.png";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import HeroSearchForm from "components/HeroSearchForm/HeroSearchForm";
+import { getNftsInfo } from "utils/collections";
 
 export interface SectionHero2Props {
   children?: React.ReactNode;
@@ -9,6 +10,18 @@ export interface SectionHero2Props {
 }
 
 const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
+  React.useEffect(() => {
+    const a = async () => {
+      console.log(1);
+      try {
+        const b = await getNftsInfo();
+        console.log("b", b);
+      } catch (error) {
+        console.log("error");
+      }
+    };
+    a();
+  });
   return (
     <div
       className={`nc-SectionHero2 flex flex-col-reverse lg:flex-col relative ${className}`}

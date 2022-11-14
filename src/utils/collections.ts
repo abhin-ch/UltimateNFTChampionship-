@@ -29,21 +29,39 @@ export const getNftsInfo = async () => {
   let nftImages: any[] = [];
   let nftPrices: any[] = [];
   let nftUSDPrices: any[] = [];
+
+  const results: any = {};
+
   // while loop
   for (let i = 0; i < contractAddresses.length; i++) {
+    let nftInfo1 = {
+      name: "",
+      image: "",
+      price: "",
+      usdPrice: "",
+      round: 1,
+      selected: -1,
+    };
     const nftInfo = await getNftInfo(contractAddresses[i], 1);
     const nftPrice = await getLowestPrice(contractAddresses[i]);
     nftsNames.push(nftInfo.name);
+    nftInfo1.name = nftInfo.name;
     nftImages.push(nftInfo.image);
+    nftInfo1.image = nftInfo.image;
     if (nftPrice) {
       nftPrices.push(ethers.utils.formatEther(nftPrice.price));
+      nftInfo1.price = ethers.utils.formatEther(nftPrice.price);
       const nftUSDPrice =
         Number(ethers.utils.formatEther(nftPrice.price)) * 1212;
       nftUSDPrices.push(nftUSDPrice.toFixed(2).toString());
+      nftInfo1.usdPrice = nftUSDPrice.toFixed(2).toString();
     } else {
       nftPrices.push("0");
+      nftInfo1.price = "0";
       nftUSDPrices.push("0");
+      nftInfo1.usdPrice = "0";
     }
+    results[contractAddresses[i]] = nftInfo1;
   }
 
   // contractAddresses.forEach(async (address: string) => {
@@ -56,5 +74,5 @@ export const getNftsInfo = async () => {
   //   // add a 1 second delay
   //   await wait(1000);
   // });
-  return { nftsNames, nftImages, nftPrices, nftUSDPrices };
+  return results;
 };
