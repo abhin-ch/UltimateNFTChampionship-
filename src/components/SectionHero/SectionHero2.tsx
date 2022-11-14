@@ -2,9 +2,6 @@ import React, { FC } from "react";
 import imagePng from "images/hero-right-3.png";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import HeroSearchForm from "components/HeroSearchForm/HeroSearchForm";
-import { getNftsInfo } from "utils/collections";
-import { nftCollectionToAddress, nftContractName } from "contains/collections";
-import { getLowestPrice } from "utils/moralis";
 
 export interface SectionHero2Props {
   children?: React.ReactNode;
@@ -12,23 +9,6 @@ export interface SectionHero2Props {
 }
 
 const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
-  //create a temp useState
-  const [temp, setTemp] = React.useState("");
-
-  //create a useEffect
-  React.useEffect(() => {
-    //call the function to get the lowest prices
-    const a = async () => {
-      const b = await getNftsInfo();
-      console.log("response :>> ", b);
-      // const b = await getLowestPrice(
-      // nftCollectionToAddress[nftContractName[0]]
-      // );
-      // console.log("response :>> ", b);
-    };
-    a();
-  }, []);
-
   return (
     <div
       className={`nc-SectionHero2 flex flex-col-reverse lg:flex-col relative ${className}`}
@@ -42,7 +22,6 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
             Discover the most outstanding NTFs in all topics of life. <br />{" "}
             Creative your NTFs and sell them
           </span>
-          <span>{temp}</span>
           <ButtonPrimary>
             <span>Start your search</span>
             <span>
