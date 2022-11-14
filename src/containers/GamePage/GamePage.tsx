@@ -1,15 +1,23 @@
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import CardNFT2 from "components/CardNFT2";
 import UserInfoCard from "components/UserInfoCard/UserInfoCard";
+import useCountDownTime from "hooks/useCountDownTime";
 import React, { useState } from "react";
 
 const GamePage = () => {
   const [hasLiked, setHasLiked] = useState<boolean>(false);
   const [selectedNFT, setSelectedNFT] = useState<any>("");
+  const timeLeft = useCountDownTime();
 
   const handleLikedAction = (nft: any) => {
-    setHasLiked(true);
-    setSelectedNFT(nft);
+    if (hasLiked === true) {
+      setHasLiked(false);
+
+      setSelectedNFT(undefined);
+    } else {
+      setHasLiked(true);
+      setSelectedNFT(nft);
+    }
   };
 
   return (
@@ -22,10 +30,11 @@ const GamePage = () => {
         >
           {" "}
           <div className="absolute -top-20 w-full">
-            <UserInfoCard />
+            <UserInfoCard timeLeft={timeLeft} />
           </div>
           <div className="w-96">
             <CardNFT2
+              nft={undefined}
               disabled={hasLiked}
               handleLikedAction={handleLikedAction}
             />

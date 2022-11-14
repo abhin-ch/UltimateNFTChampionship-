@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
@@ -14,16 +14,19 @@ export interface CardNFT2Props {
   isLiked?: boolean;
   disabled?: boolean;
   handleLikedAction?: any;
+  nft: any;
 }
 
 const CardNFT2: FC<CardNFT2Props> = ({
   className = "",
-  isLiked,
   disabled,
   handleLikedAction,
+  nft,
 }) => {
+  const [isLiked, setIsLiked] = useState(false);
   const handleSelectedNft = () => {
     handleLikedAction("nft");
+    setIsLiked(!isLiked);
   };
   return (
     <div
@@ -34,17 +37,10 @@ const CardNFT2: FC<CardNFT2Props> = ({
         <div>
           <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
-            src={nftsImgs[Math.floor(Math.random() * nftsImgs.length)]}
+            src={nftsImgs[Math.floor(1)]}
             className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
           />
         </div>
-
-        {/* NFT TYPE */}
-        {Math.random() > 0.5 ? (
-          <ItemTypeVideoIcon className="absolute bottom-2.5 right-2.5 w-7 h-7 md:w-9 md:h-9" />
-        ) : (
-          <ItemTypeImageIcon className="absolute bottom-2.5 right-2.5 w-7 h-7 md:w-9 md:h-9" />
-        )}
 
         {/* LIKE AND AVATARS */}
         <div className="absolute top-2.5 left-2.5 z-10 flex items-center space-x-2">
@@ -71,14 +67,20 @@ const CardNFT2: FC<CardNFT2Props> = ({
           </svg>
 
           <div className="absolute left-4 top-5 w-48 ">
-            <h2 className={`text-lg font-semibold `}>
-              CloneF #{Math.floor(Math.random() * 1000) + 1000}
-            </h2>
+            <h2 className={`text-lg font-semibold `}>CloneF #{1000}</h2>
           </div>
         </div>
       </div>
 
-      <Link to={"/nft-detailt"} className="absolute inset-0"></Link>
+      <Link
+        to=""
+        onClick={(e) => {
+          e.preventDefault();
+          setIsLiked(!isLiked);
+          handleSelectedNft();
+        }}
+        className="absolute inset-0"
+      ></Link>
     </div>
   );
 };

@@ -1,8 +1,12 @@
 import useCountDownTime from "hooks/useCountDownTime";
 import React from "react";
 
-const TimeCountDown = () => {
-  const timeLeft = useCountDownTime();
+interface TimeCountDownProps {
+  timeLeft: any;
+}
+
+const TimeCountDown = (props: TimeCountDownProps) => {
+  const { timeLeft } = props;
 
   return (
     <div className="space-y-5">

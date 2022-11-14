@@ -88,7 +88,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
           </div>
 
           {/* AUTION TIME */}
-          <TimeCountDown />
+          {/* <TimeCountDown /> */}
 
           <div className="w h-[1px] bg-neutral-100 dark:bg-neutral-700"></div>
 
