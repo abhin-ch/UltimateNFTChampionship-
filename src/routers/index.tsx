@@ -23,10 +23,12 @@ import PageConnectWallet from "containers/PageConnectWallet";
 import PageHome2 from "containers/PageHome/PageHome2";
 import PageHome3 from "containers/PageHome/PageHome3";
 import UserPage from "containers/UserPage/UserPage";
+import GamePage from "containers/GamePage/GamePage";
 
 export const pages: Page[] = [
   { path: "/", component: PageHome2 },
   { path: "/user", component: UserPage },
+  { path: "/game", component: GamePage },
   { path: "/#", component: PageHome2 },
   { path: "/home2", component: PageHome },
   { path: "/home3", component: PageHome3 },
@@ -51,7 +53,7 @@ const MyRoutes = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      {/* <SiteHeader /> */}
+      <SiteHeader />
       <Routes>
         {pages.map(({ component, path }) => {
           const Component = component;
