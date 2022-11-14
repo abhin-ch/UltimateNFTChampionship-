@@ -1,11 +1,14 @@
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
-import React from "react";
+import React, { useState } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 import styles from "./UserPage.module.css";
 
 const UserPage = () => {
-  const handleClick = () => {};
+  const [name, setName] = useState("");
+  const handleClick = () => {
+    window.localStorage.setItem("UNF_Name", name);
+  };
 
   return (
     <div className="w-full h-screen">
@@ -33,6 +36,8 @@ const UserPage = () => {
             }}
             type="text"
             disabled={false}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <ButtonPrimary onClick={handleClick}>Play</ButtonPrimary>
         </div>
