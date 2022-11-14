@@ -15,9 +15,6 @@ import PageContact from "containers/PageContact/PageContact";
 import PageHome from "containers/PageHome/PageHome";
 import PageHome2 from "containers/PageHome/PageHome2";
 import PageHome3 from "containers/PageHome/PageHome3";
-<<<<<<< Updated upstream
-import UserPage from "containers/UserPage/UserPage";
-=======
 import PageLogin from "containers/PageLogin/PageLogin";
 import PageSearch from "containers/PageSearch";
 import PageSignUp from "containers/PageSignUp/PageSignUp";
@@ -26,7 +23,7 @@ import PageUploadItem from "containers/PageUploadItem";
 import React from "react";
 import ScrollToTop from "./ScrollToTop";
 import SiteHeader from "containers/SiteHeader";
->>>>>>> Stashed changes
+import UserPage from "containers/UserPage/UserPage";
 
 export const pages: Page[] = [
   { path: "/", component: PageHome2 },
