@@ -61,7 +61,7 @@ const GamePage = () => {
               {nfts &&
                 nfts.map((nft: any) => (
                   <CardNFT2
-                    nft={undefined}
+                    nft={nft}
                     disabled={hasLiked}
                     handleLikedAction={handleLikedAction}
                   />

@@ -37,7 +37,7 @@ const CardNFT2: FC<CardNFT2Props> = ({
         <div>
           <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
-            src={nftsImgs[Math.floor(1)]}
+            src={nft.image}
             className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
           />
         </div>
@@ -67,7 +67,7 @@ const CardNFT2: FC<CardNFT2Props> = ({
           </svg>
 
           <div className="absolute left-4 top-5 w-48 ">
-            <h2 className={`text-lg font-semibold `}>CloneF #{1000}</h2>
+            <h2 className={`text-lg font-semibold `}>{nft.name}</h2>
           </div>
         </div>
       </div>
