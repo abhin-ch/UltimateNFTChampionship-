@@ -1,28 +1,32 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Page } from "./types";
-import ScrollToTop from "./ScrollToTop";
-import Footer from "shared/Footer/Footer";
-import PageHome from "containers/PageHome/PageHome";
-import Page404 from "containers/Page404/Page404";
-import AuthorPage from "containers/AuthorPage/AuthorPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import AccountPage from "containers/AccountPage/AccountPage";
-import PageContact from "containers/PageContact/PageContact";
-import PageAbout from "containers/PageAbout/PageAbout";
-import PageSignUp from "containers/PageSignUp/PageSignUp";
-import PageLogin from "containers/PageLogin/PageLogin";
-import PageSubcription from "containers/PageSubcription/PageSubcription";
+import AuthorPage from "containers/AuthorPage/AuthorPage";
 import BlogPage from "containers/BlogPage/BlogPage";
 import BlogSingle from "containers/BlogPage/BlogSingle";
-import SiteHeader from "containers/SiteHeader";
+import Footer from "shared/Footer/Footer";
 import NftDetailPage from "containers/NftDetailPage/NftDetailPage";
+import { Page } from "./types";
+import Page404 from "containers/Page404/Page404";
+import PageAbout from "containers/PageAbout/PageAbout";
 import PageCollection from "containers/PageCollection";
-import PageSearch from "containers/PageSearch";
-import PageUploadItem from "containers/PageUploadItem";
 import PageConnectWallet from "containers/PageConnectWallet";
+import PageContact from "containers/PageContact/PageContact";
+import PageHome from "containers/PageHome/PageHome";
 import PageHome2 from "containers/PageHome/PageHome2";
 import PageHome3 from "containers/PageHome/PageHome3";
+<<<<<<< Updated upstream
 import UserPage from "containers/UserPage/UserPage";
+=======
+import PageLogin from "containers/PageLogin/PageLogin";
+import PageSearch from "containers/PageSearch";
+import PageSignUp from "containers/PageSignUp/PageSignUp";
+import PageSubcription from "containers/PageSubcription/PageSubcription";
+import PageUploadItem from "containers/PageUploadItem";
+import React from "react";
+import ScrollToTop from "./ScrollToTop";
+import SiteHeader from "containers/SiteHeader";
+>>>>>>> Stashed changes
 
 export const pages: Page[] = [
   { path: "/", component: PageHome2 },
