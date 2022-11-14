@@ -9,7 +9,7 @@ const UserInfoCard = () => {
   }, []);
 
   return (
-    <div className={styles.card + " p-5"}>
+    <div className={styles.card + " p-5 bg-white"}>
       <div className="flex flex-col gap-10">
         <h2 className="text-4xl !leading-tight font-bold">Welcome {name}</h2>
         <div className="flex flex-row gap-32 items-center">

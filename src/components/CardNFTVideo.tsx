@@ -110,11 +110,11 @@ const CardNFTVideo: FC<CardNFTVideoProps> = ({
             className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
           />
         </div>
-
+        {/* 
         <LikeButton
           liked={isLiked}
           className="absolute top-3 right-3 z-10 !h-9"
-        />
+        /> */}
 
         <ButtonPlayMusicRunningContainer
           className="absolute bottom-3 left-3 z-10"

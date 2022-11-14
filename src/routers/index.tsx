@@ -53,7 +53,7 @@ const MyRoutes = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <SiteHeader />
+      {/* <SiteHeader /> */}
       <Routes>
         {pages.map(({ component, path }) => {
           const Component = component;
