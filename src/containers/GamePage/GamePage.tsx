@@ -57,7 +57,7 @@ const GamePage = () => {
             <UserInfoCard timeLeft={timeLeft} />
           </div>
           <div>
-            <div className="  grid grid-cols-3 gap-8 w-full">
+            <div className="  grid grid-cols-3 gap-8 w-full mt-48">
               {nfts &&
                 nfts.map((nft: any) => (
                   <CardNFT2
