@@ -30,7 +30,7 @@ const useCountDownTime = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setTimeLeft(calculateTimeLeft());
-    }, 1);
+    }, 1000);
     return () => clearTimeout(timer);
   });
 

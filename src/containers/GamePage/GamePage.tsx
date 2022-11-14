@@ -2,7 +2,7 @@ import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import CardNFT2 from "components/CardNFT2";
 import UserInfoCard from "components/UserInfoCard/UserInfoCard";
 import useCountDownTime from "hooks/useCountDownTime";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const GamePage = () => {
   const [hasLiked, setHasLiked] = useState<boolean>(false);
@@ -19,6 +19,14 @@ const GamePage = () => {
       setSelectedNFT(nft);
     }
   };
+
+  const goToNextRound = () => {};
+
+  useEffect(() => {
+    if (timeLeft.seconds === 0) {
+      goToNextRound();
+    }
+  }, [timeLeft]);
 
   return (
     <div className="w-full h-screen">
