@@ -1,4 +1,4 @@
-export const nftContractName = [
+export const nftContractName: string[] = [
   "boardapeyachtclub",
   "mutantapeyachtclub",
   "otherdeedforotherside",
@@ -18,7 +18,6 @@ export const nftContractName = [
   "io:imaginaryones",
   "thepotatoz",
   "noblecards:seasonone",
-  "10ktfguccigrail",
   "rareapepeyc",
   "artgobblers",
   "10ktfstockroom",
@@ -26,8 +25,8 @@ export const nftContractName = [
   "wolfgame",
   "flufworld",
   "murakami.flowersofficial",
-  "rtfktxrimowameta-artisancollection",
-  "privatenation-founderspriates",
+  "rtfktxrimowametaartisancollection",
+  "privatenationfounderspriates",
   "cryptoninjapartners",
   "genuineundead",
   "[ledger]market-black-on-blacknanox",
@@ -36,7 +35,18 @@ export const nftContractName = [
   "beanszofficial",
 ];
 
-export const nftCollectionToAddress = {
+type NftCollectionsToAddressType = {
+  [key: string]: string;
+};
+
+type NftCollectionsToObjectType = {
+  [key: string]: {
+    name: string;
+    address: string;
+  };
+};
+
+export const nftCollectionToAddress: NftCollectionsToAddressType = {
   boardapeyachtclub: "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D",
   mutantapeyachtclub: "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
   otherdeedforotherside: "0x34d85c9CDeB23FA97cb08333b511ac86E1C4E258",
@@ -54,7 +64,7 @@ export const nftCollectionToAddress = {
   doodles: "0x8a90CAb2b38dba80c64b7734e58Ee1dB38B8992e",
   pudgypenguins: "0xBd3531dA5CF5857e7CfAA92426877b022e612cf8",
   "io:imaginaryones": "0x716F29B8972D551294d9E02B3eb0fC1107FbF4aA",
-  thepotaotz: "0x39ee2c7b3cb80254225884ca001F57118C8f21B6",
+  thepotatoz: "0x39ee2c7b3cb80254225884ca001F57118C8f21B6",
   "noblecards:seasonone": "0x7e9b9bA1A3B4873279857056279Cef6A4FCDf340",
   rareapepeyc: "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
   artgobblers: "0x60bb1e2AA1c9ACAfB4d34F71585D7e959f387769",
@@ -77,7 +87,7 @@ export const nftCollectionToAddress = {
 };
 
 //propeties include name and address from nftCollectionToAddress
-export const nftCollectionObject = {
+export const nftCollectionObject: NftCollectionsToObjectType = {
   boardapeyachtclub: {
     name: "Board Ape Yacht Club",
     address: "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D",
@@ -146,8 +156,8 @@ export const nftCollectionObject = {
     name: "IO: Imaginary Ones",
     address: "0x716F29B8972D551294d9E02B3eb0fC1107FbF4aA",
   },
-  thepotaotz: {
-    name: "The Potaotz",
+  thepotatoz: {
+    name: "The Potaotoz",
     address: "0x39ee2c7b3cb80254225884ca001F57118C8f21B6",
   },
   rareapepeyc: {
