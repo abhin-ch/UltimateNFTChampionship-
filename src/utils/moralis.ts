@@ -9,7 +9,7 @@ export const getLowestPrice = async (address: string) => {
     headers: { accept: "application/json", "X-API-Key": "test" },
   };
 
-  axios
+  await axios
     .request(options)
     .then(function (response) {
       console.log(response.data);

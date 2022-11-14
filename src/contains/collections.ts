@@ -1,4 +1,4 @@
-export const nftContractName = [
+export const nftContractName: string[] = [
   "boardapeyachtclub",
   "mutantapeyachtclub",
   "otherdeedforotherside",
@@ -36,7 +36,18 @@ export const nftContractName = [
   "beanszofficial",
 ];
 
-export const nftCollectionToAddress = {
+type NftCollectionsToAddressType = {
+  [key: string]: string;
+};
+
+type NftCollectionsToObjectType = {
+  [key: string]: {
+    name: string;
+    address: string;
+  };
+};
+
+export const nftCollectionToAddress: NftCollectionsToAddressType = {
   boardapeyachtclub: "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D",
   mutantapeyachtclub: "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
   otherdeedforotherside: "0x34d85c9CDeB23FA97cb08333b511ac86E1C4E258",
@@ -77,7 +88,7 @@ export const nftCollectionToAddress = {
 };
 
 //propeties include name and address from nftCollectionToAddress
-export const nftCollectionObject = {
+export const nftCollectionObject: NftCollectionsToObjectType = {
   boardapeyachtclub: {
     name: "Board Ape Yacht Club",
     address: "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D",
