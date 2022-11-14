@@ -27,7 +27,7 @@ import UserPage from "containers/UserPage/UserPage";
 import GamePage from "containers/GamePage/GamePage";
 
 export const pages: Page[] = [
-  { path: "/", component: PageHome2 },
+  { path: "/", component: PageHome3 },
   { path: "/user", component: UserPage },
   { path: "/game", component: GamePage },
   { path: "/#", component: PageHome2 },

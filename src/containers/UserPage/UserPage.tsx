@@ -3,11 +3,15 @@ import React, { useState } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 import styles from "./UserPage.module.css";
+import { useNavigate } from "react-router-dom";
 
 const UserPage = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const handleClick = () => {
     window.localStorage.setItem("UNF_Name", name);
+    navigate("/game");
   };
 
   return (
