@@ -1,8 +1,12 @@
 import useCountDownTime from "hooks/useCountDownTime";
 import React from "react";
 
-const TimeCountDown = () => {
-  const timeLeft = useCountDownTime();
+interface TimeCountDownProps {
+  timeLeft: any;
+}
+
+const TimeCountDown = (props: TimeCountDownProps) => {
+  const { timeLeft } = props;
 
   return (
     <div className="space-y-5">
@@ -37,34 +41,10 @@ const TimeCountDown = () => {
             strokeLinejoin="round"
           />
         </svg>
-        <span className="leading-none mt-1">Auction ending in:</span>
+        <span className="leading-none mt-1">Time left:</span>
       </div>
-      <div className="flex space-x-5 sm:space-x-10">
-        <div className="flex flex-col items-center">
-          <span className="text-2xl sm:text-3xl font-semibold">
-            {timeLeft.days}
-          </span>
-          <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
-            Days
-          </span>
-        </div>
-        <div className="flex flex-col items-center">
-          <span className="text-2xl sm:text-3xl font-semibold">
-            {timeLeft.hours}
-          </span>
-          <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
-            hours
-          </span>
-        </div>
-        <div className="flex flex-col items-center">
-          <span className="text-2xl sm:text-3xl font-semibold">
-            {timeLeft.minutes}
-          </span>
-          <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
-            mins
-          </span>
-        </div>
-        <div className="flex flex-col items-center">
+      <div className="flex space-x-5 sm:space-x-10 items-center w-full">
+        <div className="flex flex-col items-center w-full">
           <span className="text-2xl sm:text-3xl font-semibold">
             {timeLeft.seconds}
           </span>

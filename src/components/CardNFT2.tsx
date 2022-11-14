@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
@@ -12,28 +12,22 @@ import RemainingTimeNftCard from "./RemainingTimeNftCard";
 export interface CardNFT2Props {
   className?: string;
   isLiked?: boolean;
+  disabled?: boolean;
+  handleLikedAction?: any;
+  nft: any;
 }
 
-const CardNFT2: FC<CardNFT2Props> = ({ className = "", isLiked }) => {
-  const renderAvatars = () => {
-    return (
-      <div className="hidden md:flex -space-x-1.5 ">
-        <Avatar
-          containerClassName="ring-2 ring-white "
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white "
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white "
-          sizeClass="h-5 w-5 text-sm"
-        />
-      </div>
-    );
+const CardNFT2: FC<CardNFT2Props> = ({
+  className = "",
+  disabled,
+  handleLikedAction,
+  nft,
+}) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const handleSelectedNft = () => {
+    handleLikedAction("nft");
+    setIsLiked(!isLiked);
   };
-
   return (
     <div
       className={`nc-CardNFT2 relative bg-white dark:bg-neutral-900 rounded-3xl flex flex-col group p-2.5  ${className}`}
@@ -43,26 +37,20 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", isLiked }) => {
         <div>
           <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
-            src={nftsImgs[Math.floor(Math.random() * nftsImgs.length)]}
+            src={nftsImgs[Math.floor(1)]}
             className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
           />
         </div>
 
-        {/* NFT TYPE */}
-        {Math.random() > 0.5 ? (
-          <ItemTypeVideoIcon className="absolute bottom-2.5 right-2.5 w-7 h-7 md:w-9 md:h-9" />
-        ) : (
-          <ItemTypeImageIcon className="absolute bottom-2.5 right-2.5 w-7 h-7 md:w-9 md:h-9" />
-        )}
-
         {/* LIKE AND AVATARS */}
         <div className="absolute top-2.5 left-2.5 z-10 flex items-center space-x-2">
-          <LikeButton liked={isLiked} className=" !h-9" />
-          {renderAvatars()}
+          <LikeButton
+            handleSelectedNft={handleSelectedNft}
+            disabled={disabled}
+            liked={isLiked}
+            className=" !h-9"
+          />
         </div>
-
-        {/* ----TIME--- */}
-        <RemainingTimeNftCard contentClassName="right-5 top-1/2 -translate-y-1/2 pb-1" />
 
         <div className="absolute left-[-1px] bottom-[-0.4px] ">
           <svg
@@ -78,23 +66,21 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", isLiked }) => {
             />
           </svg>
 
-          <div className="absolute left-4 bottom-0 w-48 ">
-            <h2 className={`text-lg font-semibold `}>
-              CloneF #{Math.floor(Math.random() * 1000) + 1000}
-            </h2>
-
-            <div className="w-full mt-1.5 flex justify-between items-end ">
-              {/* <Prices2 /> */}
-              <Prices labelTextClassName="bg-white dark:bg-neutral-900 " />
-              <span className="block text-neutral-500 dark:text-neutral-400 text-xs">
-                {Math.floor(Math.random() * 90) + 10} in stock
-              </span>
-            </div>
+          <div className="absolute left-4 top-5 w-48 ">
+            <h2 className={`text-lg font-semibold `}>CloneF #{1000}</h2>
           </div>
         </div>
       </div>
 
-      <Link to={"/nft-detailt"} className="absolute inset-0"></Link>
+      <Link
+        to=""
+        onClick={(e) => {
+          e.preventDefault();
+          setIsLiked(!isLiked);
+          handleSelectedNft();
+        }}
+        className="absolute inset-0"
+      ></Link>
     </div>
   );
 };

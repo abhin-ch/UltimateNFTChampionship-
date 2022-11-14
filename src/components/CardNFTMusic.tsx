@@ -109,9 +109,9 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
       </div>
 
       {/* LIKE AND AVATARS */}
-      <div className="absolute top-2.5 left-2.5 z-10 flex items-center space-x-2">
+      {/* <div className="absolute top-2.5 left-2.5 z-10 flex items-center space-x-2">
         <LikeButton liked={isLiked} className=" !h-9" />
-      </div>
+      </div> */}
 
       {/* ----TIME--- */}
       <RemainingTimeNftCard />

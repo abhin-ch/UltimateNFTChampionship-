@@ -56,10 +56,10 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked }) => {
         ) : (
           <ItemTypeImageIcon className="absolute top-3 left-3 !w-9 !h-9" />
         )}
-        <LikeButton
+        {/* <LikeButton
           liked={isLiked}
           className="absolute top-3 right-3 z-10 !h-9"
-        />
+        /> */}
         <div className="absolute top-3 inset-x-3 flex"></div>
       </div>
 
