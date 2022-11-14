@@ -22,9 +22,11 @@ import PageUploadItem from "containers/PageUploadItem";
 import PageConnectWallet from "containers/PageConnectWallet";
 import PageHome2 from "containers/PageHome/PageHome2";
 import PageHome3 from "containers/PageHome/PageHome3";
+import UserPage from "containers/UserPage/UserPage";
 
 export const pages: Page[] = [
   { path: "/", component: PageHome2 },
+  { path: "/user", component: UserPage },
   { path: "/#", component: PageHome2 },
   { path: "/home2", component: PageHome },
   { path: "/home3", component: PageHome3 },
@@ -47,10 +49,9 @@ export const pages: Page[] = [
 
 const MyRoutes = () => {
   return (
-    <BrowserRouter
-    >
+    <BrowserRouter>
       <ScrollToTop />
-      <SiteHeader />
+      {/* <SiteHeader /> */}
       <Routes>
         {pages.map(({ component, path }) => {
           const Component = component;
@@ -58,7 +59,7 @@ const MyRoutes = () => {
         })}
         <Route element={<Page404 />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 };
