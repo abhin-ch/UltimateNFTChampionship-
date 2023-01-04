@@ -2,7 +2,7 @@ import { wait } from "@testing-library/user-event/dist/types/utils";
 import {
   nftContractName,
   nftCollectionToAddress,
-  nftCollectionObject,
+  nftCollectionObject
 } from "contains/collections";
 import { getLowestPrice } from "./moralis";
 import { getNftInfo } from "./uniblock";
@@ -40,7 +40,7 @@ export const getNftsInfo = async () => {
       price: "",
       usdPrice: "",
       round: 1,
-      selected: -1,
+      selected: -1
     };
     const nftInfo = await getNftInfo(contractAddresses[i], 1);
     const nftPrice = await getLowestPrice(contractAddresses[i]);
