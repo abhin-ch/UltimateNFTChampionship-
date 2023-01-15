@@ -15,6 +15,8 @@ export const getLowestPrice = async (address: string) => {
   } catch (err: any) {
     if (err.message === "No price found") {
       return { price: "0" };
+    } else if (err.response.status === 404) {
+      return { price: "0" };
     }
     return "";
   }

@@ -10,6 +10,8 @@ type NftInfo = {
   usdPrice: string;
   round: number;
   selected: number;
+  address: string;
+  nftId: number;
 };
 
 //generate a random list of 9 unique nft contract names from nftContractName
@@ -52,11 +54,16 @@ export const getNftsInfo = async (): Promise<NftInfo[]> => {
     const nftUSDPrice = (Number(nftPrice) * 1212).toFixed(2).toString();
     results.push({
       name: nftInfo.name,
-      image: nftInfo.image,
+      image:
+        nftInfo.image.slice(0, 3) === "ipfs"
+          ? "https://ipfs.io/" + nftInfo.image
+          : nftInfo.image,
       price: nftPrice,
       usdPrice: nftUSDPrice,
       round: 1,
-      selected: -1
+      selected: -1,
+      address: contractAddresses[i],
+      nftId: 1
     });
   }
   return results;

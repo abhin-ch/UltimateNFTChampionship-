@@ -18,7 +18,8 @@ export const getNftInfo = async (address: string, nftId: number) => {
       url: response.data.tokenURI,
       headers: {
         accept: "application/json"
-      }
+      },
+      withCredentials: false
     };
 
     // get nft info from token uri

@@ -20,7 +20,7 @@ const TestPage = () => {
         let value = tempNfts[key];
         tempAray.push(value);
       }
-      console.log('tempAray :>> ', tempAray);
+      console.log("tempAray :>> ", tempAray);
       setNfts(tempAray);
     };
 
@@ -60,6 +60,7 @@ const TestPage = () => {
                 nft={nft}
                 disabled={hasLiked}
                 handleLikedAction={handleLikedAction}
+                selectedNFT={false}
               />
             ))}
         </div>
