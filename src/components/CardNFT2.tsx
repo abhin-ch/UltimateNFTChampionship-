@@ -1,13 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
-import { nftsImgs } from "contains/fakeData";
-import ItemTypeImageIcon from "./ItemTypeImageIcon";
 import LikeButton from "./LikeButton";
-import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
-import Prices from "./Prices";
-import RemainingTimeNftCard from "./RemainingTimeNftCard";
 
 export interface CardNFT2Props {
   className?: string;
@@ -15,6 +9,7 @@ export interface CardNFT2Props {
   disabled?: boolean;
   handleLikedAction?: any;
   nft: any;
+  selectedNFT: any;
 }
 
 const CardNFT2: FC<CardNFT2Props> = ({
@@ -22,12 +17,12 @@ const CardNFT2: FC<CardNFT2Props> = ({
   disabled,
   handleLikedAction,
   nft,
+  selectedNFT,
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
   const handleSelectedNft = () => {
-    handleLikedAction("nft");
-    setIsLiked(!isLiked);
+    handleLikedAction(nft);
   };
+
   return (
     <div
       className={`nc-CardNFT2 relative bg-white dark:bg-neutral-900 rounded-3xl flex flex-col group p-2.5  ${className}`}
@@ -47,7 +42,7 @@ const CardNFT2: FC<CardNFT2Props> = ({
           <LikeButton
             handleSelectedNft={handleSelectedNft}
             disabled={disabled}
-            liked={isLiked}
+            liked={nft.address === selectedNFT}
             className=" !h-9"
           />
         </div>
@@ -76,7 +71,6 @@ const CardNFT2: FC<CardNFT2Props> = ({
         to=""
         onClick={(e) => {
           e.preventDefault();
-          setIsLiked(!isLiked);
           handleSelectedNft();
         }}
         className="absolute inset-0"

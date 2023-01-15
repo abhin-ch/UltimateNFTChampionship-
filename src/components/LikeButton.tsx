@@ -16,6 +16,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   return (
     <button
       className={`bg-black/50 px-3.5 h-10 flex items-center justify-center rounded-full text-white ${className}`}
+      disabled={disabled}
       onClick={() => {
         handleSelectedNft();
       }}

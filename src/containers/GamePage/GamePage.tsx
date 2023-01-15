@@ -16,7 +16,7 @@ const GamePage = () => {
       const tempNfts = await getNftsInfo();
       let tempAray = [];
       for (let key in tempNfts) {
-        let value = tempNfts[key];
+        let value = { ...tempNfts[key], address: key };
         tempAray.push(value);
       }
       setNfts(tempAray);
@@ -26,14 +26,8 @@ const GamePage = () => {
   }, []);
 
   const handleLikedAction = (nft: any) => {
-    if (hasLiked === true) {
-      setHasLiked(false);
-
-      setSelectedNFT(undefined);
-    } else {
-      setHasLiked(true);
-      setSelectedNFT(nft);
-    }
+    setHasLiked(true);
+    setSelectedNFT(nft.address);
   };
 
   const goToNextRound = () => {};
@@ -57,12 +51,13 @@ const GamePage = () => {
             <UserInfoCard timeLeft={timeLeft} />
           </div>
           <div>
-            <div className="  grid grid-cols-3 gap-8 w-full mt-48">
+            <div className="  grid grid-cols-5 gap-8 w-full mt-48">
               {nfts &&
                 nfts.map((nft: any) => (
                   <CardNFT2
                     nft={nft}
-                    disabled={hasLiked}
+                    selectedNFT={selectedNFT}
+                    disabled={hasLiked && nft.address === selectedNFT}
                     handleLikedAction={handleLikedAction}
                   />
                 ))}
