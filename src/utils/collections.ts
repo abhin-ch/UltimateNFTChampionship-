@@ -1,8 +1,7 @@
 import { nftContractName, nftCollectionToAddress } from "contains/collections";
 import { getLowestPrice } from "./moralis";
 import { getNftInfo } from "./uniblock";
-import { ethers, logger } from "ethers";
-import { wait } from "@testing-library/user-event/dist/types/utils";
+import { BigNumber, ethers } from "ethers";
 
 type NftInfo = {
   name: string;
@@ -42,18 +41,18 @@ export const getNftsInfo = async (): Promise<NftInfo[]> => {
       const moralisResult = (await getLowestPrice(contractAddresses[i])) ?? "";
 
       if (moralisResult) {
-        console.log("nftPrice :>> ", nftPrice);
-        nftPrice = ethers.utils.formatEther(Number(moralisResult.price));
+        nftPrice = ethers.utils.formatEther(
+          BigNumber.from(moralisResult.price)
+        );
+        // nftPrice = moralisResult.price;
         break;
       }
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }
-    const nftUSDPrice = (Number(ethers.utils.formatEther(nftPrice)) * 1212)
-      .toFixed(2)
-      .toString();
+    const nftUSDPrice = (Number(nftPrice) * 1212).toFixed(2).toString();
     results.push({
       name: nftInfo.name,
-      image: nftInfo.string,
+      image: nftInfo.image,
       price: nftPrice,
       usdPrice: nftUSDPrice,
       round: 1,

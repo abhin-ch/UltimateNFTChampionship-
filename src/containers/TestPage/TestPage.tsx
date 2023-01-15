@@ -20,6 +20,7 @@ const TestPage = () => {
         let value = tempNfts[key];
         tempAray.push(value);
       }
+      console.log('tempAray :>> ', tempAray);
       setNfts(tempAray);
     };
 

@@ -13,9 +13,8 @@ export const getLowestPrice = async (address: string) => {
     const response = await axios.request(options);
     return response.data;
   } catch (err: any) {
-    console.log("err.message :>> ", err.message);
-    if (err.message == "No price found") {
-      return "0";
+    if (err.message === "No price found") {
+      return { price: "0" };
     }
     return "";
   }
