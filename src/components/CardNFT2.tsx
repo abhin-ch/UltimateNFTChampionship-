@@ -9,7 +9,7 @@ export interface CardNFT2Props {
   disabled?: boolean;
   handleLikedAction?: any;
   nft: any;
-  selectedNFT: any;
+  likedInPastRound: boolean;
 }
 
 const CardNFT2: FC<CardNFT2Props> = ({
@@ -17,9 +17,13 @@ const CardNFT2: FC<CardNFT2Props> = ({
   disabled,
   handleLikedAction,
   nft,
-  selectedNFT,
+  isLiked = false,
+  likedInPastRound = false,
 }) => {
   const handleSelectedNft = () => {
+    if (likedInPastRound) {
+      return;
+    }
     handleLikedAction(nft);
   };
 
@@ -42,7 +46,7 @@ const CardNFT2: FC<CardNFT2Props> = ({
           <LikeButton
             handleSelectedNft={handleSelectedNft}
             disabled={disabled}
-            liked={nft.address === selectedNFT}
+            liked={likedInPastRound || isLiked}
             className=" !h-9"
           />
         </div>

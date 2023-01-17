@@ -6,8 +6,8 @@ export const getNftInfo = async (address: string, nftId: number) => {
     method: "GET",
     url: `https://api.uniblock.dev/portfolio/v1/nft/nftInfo?chainId=1&nftAddress=${address}&nftId=${nftId}`,
     headers: {
-      accept: "application/json"
-    }
+      accept: "application/json",
+    },
   };
   try {
     const response = await axios.request(options);
@@ -15,8 +15,8 @@ export const getNftInfo = async (address: string, nftId: number) => {
       method: "GET",
       url: response.data.tokenURI,
       headers: {
-        accept: "application/json"
-      }
+        accept: "application/json",
+      },
     };
     const responseUri = await axios.request(optionsUri);
     return responseUri.data;
