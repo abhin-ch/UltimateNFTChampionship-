@@ -1,12 +1,10 @@
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 import CardNFT2 from "components/CardNFT2";
 import UserInfoCard from "components/UserInfoCard/UserInfoCard";
-import useCountDownTime from "hooks/useCountDownTime";
 import React, { useEffect, useState } from "react";
 import { getNftsInfo } from "utils/collections";
-import { Button, CircularProgress, Modal } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import { StyledModalBox } from "components/styled-modal-box/StyledModalBox";
-import axios from "axios";
 
 enum GameResult {
   Default = -1,
@@ -15,30 +13,90 @@ enum GameResult {
   CpuWin = 2,
 }
 
+const TIMER_COUNTDOWN = {
+  0: -1,
+  1: 59,
+  2: 45,
+  3: 30,
+};
+
+const DEFAULT_SCORE = 0.0;
+
 const GamePage = () => {
-  // Score tracker
+  // use-states
+
+  // Score tracker states
   const [computerSelectedNftsArr, setComputerSelectedNftsArr] = useState<any>(
     []
   );
   const [playerSelectedNftsArr, setPlayerSelectedNftsArr] = useState<any>([]);
-  const [playerScore, setPlayerScore] = useState<number>(0.0);
-  const [computerScore, setComputerScore] = useState<number>(0.0);
-  console.log(playerSelectedNftsArr);
+  const [playerScore, setPlayerScore] = useState<number>(DEFAULT_SCORE);
+  const [computerScore, setComputerScore] = useState<number>(DEFAULT_SCORE);
 
+  // Nft card selection states
   const [hasLiked, setHasLiked] = useState<boolean>(false);
   const [selectedNFT, setSelectedNFT] = useState<any>(undefined);
+
+  // NFT fetching states
+  const [fetching, setFetching] = useState(true);
   const [nfts, setNfts] = useState<any>(undefined);
-  const [loading, setLoading] = useState(false);
+
+  // Round information states
   const [isPlayerWin, setIsPlayerWin] = useState<GameResult>(
     GameResult.Default
   );
-  const [roundModalOpen, setRoundModalOpen] = useState(false);
-  const [gameModalOpen, setGameModalOpen] = useState(false);
   const [round, setRound] = useState<number>(1);
 
+  // Modal states
+  const [roundModalOpen, setRoundModalOpen] = useState(false);
+  const [gameModalOpen, setGameModalOpen] = useState(false);
+
+  // Timer state
   const [counter, setCounter] = React.useState(-1);
 
-  const [fetching, setFetching] = useState(true);
+  // Helper functions
+  const getRoundResultText = () => {
+    let res = "";
+    if (isPlayerWin === GameResult.PlayerWin) {
+      res = "You win";
+    } else if (isPlayerWin === GameResult.CpuWin) {
+      res = "CPU wins";
+    } else {
+      res = "Draw";
+    }
+    return res;
+  };
+
+  const getCounter = (currRound: number) => {
+    if (currRound === 1) {
+      return TIMER_COUNTDOWN[1];
+    } else if (currRound === 2) {
+      return TIMER_COUNTDOWN[2];
+    } else if (currRound === 3) {
+      return TIMER_COUNTDOWN[3];
+    } else {
+      return TIMER_COUNTDOWN[0];
+    }
+  };
+
+  const roundReset = () => {
+    let currRound = round;
+    setRound(currRound + 1);
+    setCounter(getCounter(currRound + 1));
+    setRoundModalOpen(false);
+  };
+
+  const gameReset = () => {
+    let currRound = round;
+    setComputerScore(DEFAULT_SCORE);
+    setPlayerScore(DEFAULT_SCORE);
+    setComputerSelectedNftsArr([]);
+    setPlayerSelectedNftsArr([]);
+    setGameModalOpen(false);
+    setRound(1);
+    setCounter(getCounter(currRound + 1));
+    setFetching(true);
+  };
 
   const handleRoundModalClose = () => {
     roundReset();
@@ -47,6 +105,85 @@ const GamePage = () => {
   const handleGameModalClose = () => {
     setGameModalOpen(false);
   };
+
+  const updateScore = (playerNft: any, cpuNft: any) => {
+    setPlayerScore(playerScore + (Number(playerNft.price) ?? DEFAULT_SCORE));
+    setComputerScore(computerScore + (Number(cpuNft.price) ?? DEFAULT_SCORE));
+  };
+
+  const handleLikedAction = (nft: any) => {
+    setHasLiked(true);
+    setSelectedNFT(nft);
+  };
+
+  const pickRandomNft = () => {
+    const rand = Math.floor(Math.random() * 10);
+    const cpuNft = nfts[rand];
+    return cpuNft;
+  };
+
+  const updatePlayerSelectedNfts = () => {
+    if (selectedNFT) {
+      const element = {
+        address: selectedNFT.address,
+        price: selectedNFT.price,
+      };
+      let tempArr = [...playerSelectedNftsArr];
+      setPlayerSelectedNftsArr(undefined);
+      tempArr.push(element);
+      setPlayerSelectedNftsArr(tempArr);
+    }
+  };
+
+  const updateComputerSelectedNfts = (nft: any) => {
+    const element = { address: nft.address, price: nft.price };
+    let tempArr = [...playerSelectedNftsArr];
+    setComputerSelectedNftsArr(undefined);
+    tempArr.push(element);
+    setComputerSelectedNftsArr(tempArr);
+  };
+
+  const goToNextRound = () => {
+    let cpuNft = pickRandomNft();
+    while (
+      computerSelectedNftsArr.some(
+        (item: any) => item.address === cpuNft.address
+      )
+    ) {
+      cpuNft = pickRandomNft();
+    }
+
+    updatePlayerSelectedNfts();
+    updateComputerSelectedNfts(cpuNft);
+    updateScore(selectedNFT, cpuNft);
+
+    if (selectedNFT.price > cpuNft.price) {
+      setIsPlayerWin(GameResult.PlayerWin);
+    } else if (selectedNFT.price < cpuNft.price) {
+      setIsPlayerWin(GameResult.CpuWin);
+    } else {
+      setIsPlayerWin(GameResult.Draw);
+    }
+
+    if (round < 3) {
+      setRoundModalOpen(true);
+    } else {
+      setGameModalOpen(true);
+    }
+  };
+
+  // use-effects
+  useEffect(() => {
+    if (counter === 0) {
+      goToNextRound();
+    }
+  }, [counter]);
+
+  useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer ? timer : "");
+  }, [counter]);
 
   useEffect(() => {
     if (fetching) {
@@ -63,135 +200,13 @@ const GamePage = () => {
           tempComputerSelectedNftsMap[key] = false;
         }
         setNfts(tempArray);
-        setCounter(30);
+        setRound(1);
+        setCounter(getCounter(1));
         setFetching(false);
       };
       void getData();
     }
   }, [fetching]);
-
-  const updateScore = (playerNft: any, cpuNft: any) => {
-    setPlayerScore(playerScore + (Number(playerNft.price) ?? 0.0));
-    setComputerScore(computerScore + (Number(cpuNft.price) ?? 0.0));
-  };
-
-  const handleLikedAction = (nft: any) => {
-    setHasLiked(true);
-    setSelectedNFT(nft);
-  };
-
-  const pickRandomNft = () => {
-    const rand = Math.floor(Math.random() * 10);
-    const cpuNft = nfts[rand];
-    return cpuNft;
-  };
-
-  const updatePlayerSelectedNfts = () => {
-    const element = { address: selectedNFT.address, price: selectedNFT.price };
-    let tempArr = [...playerSelectedNftsArr];
-    setPlayerSelectedNftsArr(undefined);
-    tempArr.push(element);
-    setPlayerSelectedNftsArr(tempArr);
-  };
-
-  const updateComputerSelectedNfts = (nft: any) => {
-    const element = { address: nft.address, price: nft.price };
-    let tempArr = [...playerSelectedNftsArr];
-    setComputerSelectedNftsArr(undefined);
-    tempArr.push(element);
-    setComputerSelectedNftsArr(tempArr);
-  };
-
-  const goToNextRound = () => {
-    setLoading(true);
-    window.localStorage.setItem(
-      "selectedNFTsForUNC",
-      JSON.stringify([selectedNFT])
-    );
-    let cpuNft = pickRandomNft();
-    while (
-      computerSelectedNftsArr.some(
-        (item: any) => item.address === cpuNft.address
-      )
-    ) {
-      cpuNft = pickRandomNft();
-    }
-    window.localStorage.setItem(
-      "cpuSelectedNFTsForUNC",
-      JSON.stringify([cpuNft])
-    );
-
-    updatePlayerSelectedNfts();
-    updateComputerSelectedNfts(cpuNft);
-    updateScore(selectedNFT, cpuNft);
-
-    if (selectedNFT.price > cpuNft.price) {
-      setIsPlayerWin(GameResult.PlayerWin);
-    } else if (selectedNFT.price < cpuNft.price) {
-      setIsPlayerWin(GameResult.CpuWin);
-    } else {
-      setIsPlayerWin(GameResult.Draw);
-    }
-    if (round < 3) {
-      setRoundModalOpen(true);
-    } else {
-      setGameModalOpen(true);
-    }
-  };
-
-  useEffect(() => {
-    if (counter === 0) {
-      goToNextRound();
-    }
-  }, [counter]);
-
-  // Third Attempts
-  React.useEffect(() => {
-    const timer =
-      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-    return () => clearInterval(timer ? timer : "");
-  }, [counter]);
-
-  // if (loading) {
-  //   return (
-  //     <div className="w-full h-screen flex flex-col justify-center items-center">
-  //       <div className="w-full flex justify-center items-center">
-  //         <CircularProgress
-  //           sx={{ width: "60px !important", height: "60px !important" }}
-  //         />
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  const getRoundResultText = () => {
-    let res = "";
-    if (isPlayerWin === GameResult.PlayerWin) {
-      res = "You win";
-    } else if (isPlayerWin === GameResult.CpuWin) {
-      res = "CPU wins";
-    } else {
-      res = "Draw";
-    }
-    return res;
-  };
-
-  const roundReset = () => {
-    setRound(round + 1);
-    setCounter(30);
-    setRoundModalOpen(false);
-  };
-
-  const gameReset = () => {
-    setCounter(30);
-    setComputerScore(0.0);
-    setPlayerScore(0.0);
-    setComputerSelectedNftsArr([]);
-    setPlayerSelectedNftsArr([]);
-    setGameModalOpen(false);
-    setRound(1);
-    setFetching(true);
-  };
 
   return (
     <div className="w-full h-screen">
@@ -214,6 +229,7 @@ const GamePage = () => {
             {nfts &&
               nfts.map((nft: any) => (
                 <CardNFT2
+                  key={nft.address}
                   nft={nft}
                   disabled={
                     (hasLiked && nft.address === selectedNFT?.address) ||
