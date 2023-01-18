@@ -123,16 +123,17 @@ const GamePage = () => {
   };
 
   const updatePlayerSelectedNfts = () => {
-    if (selectedNFT) {
-      const element = {
-        address: selectedNFT.address,
-        price: selectedNFT.price,
-      };
-      let tempArr = [...playerSelectedNftsArr];
-      setPlayerSelectedNftsArr(undefined);
-      tempArr.push(element);
-      setPlayerSelectedNftsArr(tempArr);
+    if (!selectedNFT) {
+      return;
     }
+    const element = {
+      address: selectedNFT.address,
+      price: selectedNFT.price,
+    };
+    let tempArr = [...playerSelectedNftsArr];
+    setPlayerSelectedNftsArr(undefined);
+    tempArr.push(element);
+    setPlayerSelectedNftsArr(tempArr);
   };
 
   const updateComputerSelectedNfts = (nft: any) => {
