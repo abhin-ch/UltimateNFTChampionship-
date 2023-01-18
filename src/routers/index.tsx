@@ -25,6 +25,7 @@ import ScrollToTop from "./ScrollToTop";
 import SiteHeader from "containers/SiteHeader";
 import UserPage from "containers/UserPage/UserPage";
 import GamePage from "containers/GamePage/GamePage";
+import TestPage from "containers/TestPage/TestPage";
 
 export const pages: Page[] = [
   { path: "/", component: PageHome3 },
@@ -48,6 +49,7 @@ export const pages: Page[] = [
   { path: "/signup", component: PageSignUp },
   { path: "/login", component: PageLogin },
   { path: "/subscription", component: PageSubcription },
+  { path: "/test", component: TestPage }
 ];
 
 const MyRoutes = () => {

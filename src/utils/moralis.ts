@@ -7,12 +7,17 @@ export const getLowestPrice = async (address: string) => {
     method: "GET",
     url: `https://deep-index.moralis.io/api/v2/nft/${address}/lowestprice`,
     params: { chain: "eth", marketplace: "opensea" },
-    headers: { accept: "application/json", "X-API-Key": MORALIS_API_KEY },
+    headers: { accept: "application/json", "X-API-Key": MORALIS_API_KEY }
   };
   try {
     const response = await axios.request(options);
     return response.data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.message === "No price found") {
+      return { price: "0" };
+    } else if (err.response.status === 404) {
+      return { price: "0" };
+    }
     return "";
   }
 };
