@@ -3,7 +3,7 @@ import CardNFT2 from "components/CardNFT2";
 import UserInfoCard from "components/UserInfoCard/UserInfoCard";
 import React, { useEffect, useState } from "react";
 import { getNftsInfo } from "utils/collections";
-import { Button, Modal } from "@mui/material";
+import { Button, CircularProgress, Modal } from "@mui/material";
 import { StyledModalBox } from "components/styled-modal-box/StyledModalBox";
 
 enum GameResult {
@@ -136,6 +136,9 @@ const GamePage = () => {
   };
 
   const updateComputerSelectedNfts = (nft: any) => {
+    if (!nft) {
+      return;
+    }
     const element = { address: nft.address, price: nft.price };
     let tempArr = [...playerSelectedNftsArr];
     setComputerSelectedNftsArr(undefined);
@@ -207,6 +210,18 @@ const GamePage = () => {
       void getData();
     }
   }, [fetching]);
+
+  if (fetching) {
+    return (
+      <div className="w-full h-screen flex flex-col justify-center items-center">
+        <div className="w-full flex justify-center items-center">
+          <CircularProgress
+            sx={{ width: "60px !important", height: "60px !important" }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-screen">
