@@ -28,7 +28,7 @@ const UserInfoCard = (props: UserInfoCardProps) => {
           <TimeCountDown timeLeft={timeLeft} />
           <div className="flex flex-row items-center gap-24">
             <div className="flex flex-col items-center">
-              <h3 className="text-2xl !leading-tight font-bold">Joe</h3>
+              <h3 className="text-2xl !leading-tight font-bold">{name}</h3>
 
               <div className="flex flex-col sm:flex-row items-center p-6 mt-5 border-2 border-green-500 rounded-xl relative max-h-16">
                 <span className="block absolute bottom-full translate-y-1.5 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400 ring ring-offset-0 ring-white dark:ring-neutral-900">
