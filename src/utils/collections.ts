@@ -62,10 +62,7 @@ export const getNftsInfo = async (): Promise<NftInfo[]> => {
     const nftUSDPrice = (Number(nftPrice) * 1212).toFixed(2).toString();
     results.push({
       name: nftInfo.name,
-      image:
-        nftInfo.image.slice(0, 3) === "ipfs"
-          ? "https://ipfs.io/" + nftInfo.image
-          : nftInfo.image,
+      image: nftInfo.image,
       price: nftPrice,
       usdPrice: nftUSDPrice,
       round: 1,

@@ -54,15 +54,15 @@ const TestPage = () => {
         style={{ backgroundColor: "rgba(243, 244, 246, 0.8)" }}
       >
         <div className="  grid grid-cols-3 gap-8 w-full mt-48">
-          {nfts &&
+          {/* {nfts &&
             nfts.map((nft: any) => (
-              <CardNFT2
-                nft={nft}
-                disabled={hasLiked}
-                handleLikedAction={handleLikedAction}
-                selectedNFT={false}
-              />
-            ))}
+              // <CardNFT2
+              //   nft={nft}
+              //   disabled={hasLiked}
+              //   handleLikedAction={handleLikedAction}
+              //   selectedNFT={false}
+              // />
+            ))} */}
         </div>
       </div>
     </div>
