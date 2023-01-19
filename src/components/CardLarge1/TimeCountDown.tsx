@@ -44,12 +44,14 @@ const TimeCountDown = (props: TimeCountDownProps) => {
         <span className="leading-none mt-1">Time left:</span>
       </div>
       <div className="flex space-x-5 sm:space-x-10 items-center w-full">
-        <div className="flex flex-col items-center w-full">
-          <span className="text-2xl sm:text-3xl font-semibold">
-            {timeLeft.seconds}
-          </span>
-          <span className="sm:text-lg text-neutral-500">secs</span>
-        </div>
+        {timeLeft !== -1 && (
+          <div className="flex flex-col items-center w-full">
+            <span className="text-2xl sm:text-3xl font-semibold">
+              {timeLeft === -1 ? "" : timeLeft}
+            </span>
+            <span className="sm:text-lg text-neutral-500">secs</span>
+          </div>
+        )}
       </div>
     </div>
   );
