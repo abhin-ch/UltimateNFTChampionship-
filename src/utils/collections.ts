@@ -21,7 +21,9 @@ export const getContractAddresses = () => {
   while (randomNFTs.length < 9) {
     const randomNFT =
       nftContractName[Math.floor(Math.random() * nftContractName.length)];
+
     if (!randomNFTs.includes(randomNFT)) {
+      console.log('randomNFT :>> ', randomNFT);
       randomNFTs.push(randomNFT);
       contractAddresses.push(nftCollectionToAddress[randomNFT]);
     }
@@ -32,6 +34,7 @@ export const getContractAddresses = () => {
 // return a list of 9 random objects of NftInfo
 export const getNftsInfo = async (): Promise<NftInfo[]> => {
   const contractAddresses = getContractAddresses();
+  console.log('contractAddresses :>> ', contractAddresses);
   const results: NftInfo[] = [];
 
   // while loop
