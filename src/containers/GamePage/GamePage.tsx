@@ -15,9 +15,9 @@ enum GameResult {
 
 const TIMER_COUNTDOWN = {
   0: -1,
-  1: 59,
-  2: 45,
-  3: 30,
+  1: 12,
+  2: 8,
+  3: 5,
 };
 
 const DEFAULT_SCORE = 0.0;
