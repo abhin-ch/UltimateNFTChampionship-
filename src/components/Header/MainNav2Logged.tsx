@@ -16,10 +16,18 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
     <div className={`nc-MainNav2Logged relative z-10 ${"onTop "}`}>
       <div className="container py-5 relative flex justify-between items-center space-x-4 xl:space-x-8">
         <div className="flex justify-start flex-grow items-center space-x-3 sm:space-x-8 lg:space-x-10">
-          <Logo />
-          <div className="hidden sm:block flex-grow max-w-xs">
-
-          </div>
+          {/* <Logo /> */}
+          <h4
+            style={{
+              fontFamily: "PressStart2P",
+              color: "#ff4e7d",
+              textShadow: "5px 3px 4px #1fb146",
+            }}
+            className="font-bold text-white text-xl max-w-md text-center sm:text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl !leading-[120%] "
+          >
+            Ultimate NFT Champtionship
+          </h4>{" "}
+          <div className="hidden sm:block flex-grow max-w-xs"></div>
         </div>
         <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
           <div className="hidden items-center xl:flex space-x-2">

@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import "./styles/index.scss";
 import "./index.css";
 import "./fonts/line-awesome-1.3.0/css/line-awesome.css";
+import "./fonts/press-start-2p/PressStart2P.css";
 import "rc-slider/assets/index.css";
 
 //
