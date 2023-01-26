@@ -16,8 +16,8 @@ const UserPage = () => {
 
   return (
     <div className="w-full h-screen">
-      <BgGlassmorphism />
-      <div className="h-full flex flex-col justify-center z-100">
+      {/* <BgGlassmorphism /> */}
+      <div className="h-full flex flex-col justify-start py-48 z-100">
         <div className="flex flex-col gap-8 w-full items-center">
           <div className="flex flex-col gap-2 text-center">
             <h2
