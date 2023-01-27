@@ -158,7 +158,7 @@ const GamePage = () => {
     for (let i = 0; i < nfts.length; i++) {
       if (arr[rand] === nfts[i].usdPrice) cpuNft = nfts[i];
     }
-    console.log(difficulty, arr, rand, cpuNft);
+    // console.log(difficulty, arr, rand, cpuNft);
     setComputerNftPrice(Number(cpuNft.usdPrice));
     return cpuNft;
   };

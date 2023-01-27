@@ -48,7 +48,7 @@ export const getNftsInfo = async (): Promise<NftInfo[]> => {
     const nftInfo = await getNftInfo(contractAddresses[i], 1);
     let nftPrice: string = '';
     for (let j = 0; j < 50; j++) {
-      console.log(nftInfo.name, 'try #: ', j);
+      // console.log(nftInfo.name, 'try #: ', j);
       const moralisResult = (await getLowestPrice(contractAddresses[i])) ?? '';
 
       if (moralisResult) {
@@ -65,7 +65,7 @@ export const getNftsInfo = async (): Promise<NftInfo[]> => {
       nftInfo.image = await fetchImage(nftInfo.image.split('ipfs://')[1]);
     }
     if (!nftInfo.image) {
-      console.log('nftInfo.address :>> ', contractAddresses[i]);
+      // console.log('nftInfo.address :>> ', contractAddresses[i]);
     }
     results.push({
       name: nftInfo.name,
@@ -78,7 +78,7 @@ export const getNftsInfo = async (): Promise<NftInfo[]> => {
       nftId: 1
     });
   }
-  console.log('results: ', results);
+  // console.log('results: ', results);
   return results;
 };
 
