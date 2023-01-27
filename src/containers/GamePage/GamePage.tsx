@@ -1,28 +1,31 @@
-import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
-import CardNFT2 from "components/CardNFT2";
-import UserInfoCard from "components/UserInfoCard/UserInfoCard";
-import React, { useEffect, useState } from "react";
-import { getNftsInfo } from "utils/collections";
-import { Button, CircularProgress, Modal } from "@mui/material";
-import { StyledModalBox } from "components/styled-modal-box/StyledModalBox";
+import BgGlassmorphism from 'components/BgGlassmorphism/BgGlassmorphism';
+import CardNFT2 from 'components/CardNFT2';
+import UserInfoCard from 'components/UserInfoCard/UserInfoCard';
+import React, { useEffect, useState } from 'react';
+import { getNftsInfo } from 'utils/collections';
+import { Button, CircularProgress, Modal } from '@mui/material';
+import { StyledModalBox } from 'components/styled-modal-box/StyledModalBox';
+import { useLocation } from 'react-router-dom';
 
 enum GameResult {
   Default = -1,
   Draw = 0,
   PlayerWin = 1,
-  CpuWin = 2,
+  CpuWin = 2
 }
 
 const TIMER_COUNTDOWN = {
   0: -1,
   1: 12,
   2: 8,
-  3: 5,
+  3: 5
 };
 
 const DEFAULT_SCORE = 0.0;
 
 const GamePage = () => {
+  const { state } = useLocation();
+  const difficulty = state?.difficulty;
   // use-states
 
   // Score tracker states
@@ -32,10 +35,18 @@ const GamePage = () => {
   const [playerSelectedNftsArr, setPlayerSelectedNftsArr] = useState<any>([]);
   const [playerScore, setPlayerScore] = useState<number>(DEFAULT_SCORE);
   const [computerScore, setComputerScore] = useState<number>(DEFAULT_SCORE);
+  const [computerNftPrice, setComputerNftPrice] = useState<number>(0);
 
   // Nft card selection states
   const [hasLiked, setHasLiked] = useState<boolean>(false);
-  const [selectedNFT, setSelectedNFT] = useState<any>(undefined);
+  const [selectedNFT, setSelectedNFT] = useState<any>({
+    name: '',
+    image: '',
+    price: '',
+    usdPrice: '',
+    round: 1,
+    selected: -1
+  });
 
   // NFT fetching states
   const [fetching, setFetching] = useState(true);
@@ -56,13 +67,25 @@ const GamePage = () => {
 
   // Helper functions
   const getRoundResultText = () => {
-    let res = "";
+    let res = '';
     if (isPlayerWin === GameResult.PlayerWin) {
-      res = "You win";
+      res =
+        'You win: ' +
+        selectedNFT.usdPrice +
+        ' USD' +
+        ' vs ' +
+        computerNftPrice +
+        ' USD';
     } else if (isPlayerWin === GameResult.CpuWin) {
-      res = "CPU wins";
+      res =
+        'CPU wins: ' +
+        selectedNFT.usdPrice +
+        ' USD' +
+        ' vs ' +
+        computerNftPrice +
+        ' USD';
     } else {
-      res = "Draw";
+      res = 'Draw';
     }
     return res;
   };
@@ -117,8 +140,26 @@ const GamePage = () => {
   };
 
   const pickRandomNft = () => {
-    const rand = Math.floor(Math.random() * 10);
-    const cpuNft = nfts[rand];
+    const arr = [];
+    for (let i = 0; i < nfts.length; i++) {
+      arr.push(nfts[i].usdPrice);
+    }
+    //sort by descending order
+    arr.sort((a: any, b: any) => b - a);
+    let rand: number;
+    if (difficulty === 'hard') {
+      rand = Math.floor(Math.random() * 3);
+    } else if (difficulty === 'medium') {
+      rand = Math.floor(Math.random() * 5);
+    } else {
+      rand = Math.floor(Math.random() * 8);
+    }
+    let cpuNft;
+    for (let i = 0; i < nfts.length; i++) {
+      if (arr[rand] === nfts[i].usdPrice) cpuNft = nfts[i];
+    }
+    // console.log(difficulty, arr, rand, cpuNft);
+    setComputerNftPrice(Number(cpuNft.usdPrice));
     return cpuNft;
   };
 
@@ -128,7 +169,7 @@ const GamePage = () => {
     }
     const element = {
       address: selectedNFT.address,
-      price: selectedNFT.price,
+      price: selectedNFT.price
     };
     let tempArr = [...playerSelectedNftsArr];
     setPlayerSelectedNftsArr(undefined);
@@ -186,7 +227,7 @@ const GamePage = () => {
   useEffect(() => {
     const timer =
       counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-    return () => clearInterval(timer ? timer : "");
+    return () => clearInterval(timer ? timer : '');
   }, [counter]);
 
   useEffect(() => {
@@ -214,10 +255,10 @@ const GamePage = () => {
 
   if (fetching) {
     return (
-      <div className="w-full h-screen flex flex-col justify-center items-center">
-        <div className="w-full flex justify-center items-center">
+      <div className='w-full h-screen flex flex-col justify-center items-center'>
+        <div className='w-full flex justify-center items-center'>
           <CircularProgress
-            sx={{ width: "60px !important", height: "60px !important" }}
+            sx={{ width: '60px !important', height: '60px !important' }}
           />
         </div>
       </div>
@@ -225,15 +266,15 @@ const GamePage = () => {
   }
 
   return (
-    <div className="w-full h-screen">
+    <div className='w-full h-screen'>
       <BgGlassmorphism />
-      <div className="h-full flex flex-col z-100">
+      <div className='h-full flex flex-col z-100'>
         <div
-          className="w-full border relative rounded-2xl border-0 px-20 mt-32"
-          style={{ backgroundColor: "rgba(243, 244, 246, 0.8)" }}
+          className='w-full border relative rounded-2xl border-0 px-20 mt-32'
+          style={{ backgroundColor: 'rgba(243, 244, 246, 0.8)' }}
         >
-          {" "}
-          <div className="absolute -top-20 w-full">
+          {' '}
+          <div className='absolute -top-20 w-full'>
             <UserInfoCard
               computerScore={computerScore}
               playerScore={playerScore}
@@ -241,7 +282,7 @@ const GamePage = () => {
               timeLeft={counter}
             />
           </div>
-          <div className="  grid grid-cols-4 gap-8 w-full mt-48">
+          <div className='  grid grid-cols-4 gap-8 w-full mt-48'>
             {nfts &&
               nfts.map((nft: any) => (
                 <CardNFT2
@@ -268,23 +309,23 @@ const GamePage = () => {
       <Modal
         open={roundModalOpen}
         onClose={handleRoundModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
       >
         <StyledModalBox
           sx={{
-            gap: "0px",
-            padding: "5rem",
-            minHeight: "400px",
-            height: "auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
+            gap: '0px',
+            padding: '5rem',
+            minHeight: '400px',
+            height: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
         >
           {isPlayerWin !== GameResult.Default && (
-            <h3 className="text-2xl !leading-tight font-bold ">
+            <h3 className='text-2xl !leading-tight font-bold '>
               {getRoundResultText()}
             </h3>
           )}
@@ -296,54 +337,64 @@ const GamePage = () => {
       <Modal
         open={gameModalOpen}
         onClose={handleGameModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
       >
         <StyledModalBox
           sx={{
-            gap: "0px",
-            padding: "5rem",
-            minHeight: "400px",
-            height: "auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "flex-start",
+            gap: '0px',
+            padding: '5rem',
+            minHeight: '400px',
+            height: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'flex-start'
           }}
         >
-          <div className="flex flex-col items-center gap-5">
-            <h3 className="text-2xl !leading-tight font-bold">Final Scores</h3>
+          <div className='flex flex-col items-center gap-5'>
+            <h3 className='text-2xl !leading-tight font-bold'>
+              Round:{' '}
+              {selectedNFT.usdPrice +
+                ' USD' +
+                ' vs ' +
+                computerNftPrice +
+                ' USD'}
+            </h3>
+            <h3 className='text-2xl !leading-tight font-bold'>
+              Final Scores on {difficulty}
+            </h3>
 
-            <div className="flex flex-col items-center gap-5">
-              <h3 className="text-2xl !leading-tight font-bold">Joe</h3>
+            <div className='flex flex-col items-center gap-5'>
+              <h3 className='text-2xl !leading-tight font-bold'>Joe</h3>
 
-              <div className="flex flex-col sm:flex-row items-center p-6 mt-5 border-2 border-green-500 rounded-xl relative max-h-16">
-                <span className="block absolute bottom-full translate-y-1.5 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400 ring ring-offset-0 ring-white dark:ring-neutral-900">
+              <div className='flex flex-col sm:flex-row items-center p-6 mt-5 border-2 border-green-500 rounded-xl relative max-h-16'>
+                <span className='block absolute bottom-full translate-y-1.5 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400 ring ring-offset-0 ring-white dark:ring-neutral-900'>
                   Score
                 </span>
-                <span className="text-xl font-semibold text-green-500">
+                <span className='text-xl font-semibold text-green-500'>
                   {playerScore.toFixed(3)}
-                  {" ETH"}
+                  {' ETH'}
                 </span>
               </div>
-              <h3 className="text-2xl !leading-tight font-bold">Computer</h3>
+              <h3 className='text-2xl !leading-tight font-bold'>Computer</h3>
 
-              <div className="flex flex-col sm:flex-row items-center p-6 mt-5 border-2 border-green-500 rounded-xl relative max-h-16">
-                <span className="block absolute bottom-full translate-y-1.5 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400 ring ring-offset-0 ring-white dark:ring-neutral-900">
+              <div className='flex flex-col sm:flex-row items-center p-6 mt-5 border-2 border-green-500 rounded-xl relative max-h-16'>
+                <span className='block absolute bottom-full translate-y-1.5 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400 ring ring-offset-0 ring-white dark:ring-neutral-900'>
                   Score
                 </span>
-                <span className="text-xl font-semibold text-green-500">
+                <span className='text-xl font-semibold text-green-500'>
                   {computerScore.toFixed(3)}
-                  {" ETH"}
+                  {' ETH'}
                 </span>
               </div>
             </div>
-            <h3 className="text-2xl !leading-tight font-bold ">
+            <h3 className='text-2xl !leading-tight font-bold '>
               {playerScore > computerScore
-                ? "You win!"
+                ? 'You win!'
                 : playerScore < computerScore
-                ? "Computer wins."
-                : "Draw!"}
+                ? 'Computer wins.'
+                : 'Draw!'}
             </h3>
             <Button onClick={gameReset}>Restart</Button>
           </div>
