@@ -23,7 +23,6 @@ export const getContractAddresses = () => {
       nftContractName[Math.floor(Math.random() * nftContractName.length)];
 
     if (!randomNFTs.includes(randomNFT)) {
-      console.log('randomNFT :>> ', randomNFT);
       randomNFTs.push(randomNFT);
       contractAddresses.push(nftCollectionToAddress[randomNFT]);
     }
@@ -34,7 +33,6 @@ export const getContractAddresses = () => {
 // return a list of 9 random objects of NftInfo
 export const getNftsInfo = async (): Promise<NftInfo[]> => {
   const contractAddresses = getContractAddresses();
-  console.log('contractAddresses :>> ', contractAddresses);
   const results: NftInfo[] = [];
 
   // while loop
@@ -64,7 +62,6 @@ export const getNftsInfo = async (): Promise<NftInfo[]> => {
     }
     const nftUSDPrice = (Number(nftPrice) * 1212).toFixed(2).toString();
     if (nftInfo.image && nftInfo.image.includes('ipfs://')) {
-      console.log('nftInfo.name :>> ', nftInfo.name);
       nftInfo.image = await fetchImage(nftInfo.image.split('ipfs://')[1]);
     }
     if (!nftInfo.image) {
