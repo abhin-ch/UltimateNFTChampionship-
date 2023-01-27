@@ -49,14 +49,14 @@ export const pages: Page[] = [
   { path: "/signup", component: PageSignUp },
   { path: "/login", component: PageLogin },
   { path: "/subscription", component: PageSubcription },
-  { path: "/test", component: TestPage }
+  { path: "/test", component: TestPage },
 ];
 
 const MyRoutes = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <SiteHeader />
+      {/* <SiteHeader /> */}
       <Routes>
         {pages.map(({ component, path }) => {
           const Component = component;
